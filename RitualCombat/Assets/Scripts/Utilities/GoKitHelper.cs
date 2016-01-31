@@ -84,4 +84,28 @@ public static class GoKitHelper{
 		
 		return NewTween;
 	}
+	
+	public static GoTween MakeTweenScale(
+		Transform TheTransform,
+		Vector3 Scale,
+		float MoveTime,
+		bool IsLocal = false,
+		GoEaseType Ease = GoEaseType.Linear,
+		VoidDelegate OnCompleteFunction = null
+		)
+	{
+		GoTweenConfig Config = new GoTweenConfig();
+		Config.addTweenProperty(new ScaleTweenProperty(Scale, false));
+		Config.setEaseType(Ease);
+		if(OnCompleteFunction != null){
+			Config.onComplete(c => {
+				OnCompleteFunction();
+			});
+		}
+		
+		GoTween NewTween = new GoTween(TheTransform, MoveTime, Config);
+		Go.addTween(NewTween);
+		
+		return NewTween;
+	}
 }
